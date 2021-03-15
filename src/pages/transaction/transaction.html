@@ -1,0 +1,66 @@
+<!--
+  Generated template for the TransactionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header class="header-a" no-border>
+  <ion-navbar>
+    <ion-title>
+      <p text-center><img src="../../assets/imgs/3.png" alt="" width="100px"></p>
+
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-fab right bottom>
+    <button ion-fab color="secondary" (click)="openList()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-item>
+    <ion-label>เลือกรายการแสดง</ion-label>
+    <ion-select [(ngModel)]="choose" (ionChange)="onChange()">
+      <ion-option value="all" selected>ทั้งหมด</ion-option>
+      <ion-option value="ฝาก">ฝาก</ion-option>
+      <ion-option value="ถอน">ถอน</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <div *ngFor="let tran of transactions">
+    <ion-card (click)="showTrans(tran.id,tran.status)">
+      <ion-card-header>
+        <ion-item>
+          <ion-icon name="arrow-dropup-circle" item-start color="secondary" *ngIf="tran.status == 'ฝาก'"></ion-icon>
+          <ion-icon name="arrow-dropdown-circle" item-start color="danger" *ngIf="tran.status == 'ถอน'"></ion-icon>
+          {{tran.status}}
+          <ion-badge item-end>{{tran.date}}</ion-badge>
+        </ion-item>
+
+      </ion-card-header>
+      <ion-card-content>
+        <h2 text-center>จำนวนเงิน : 999 บาท</h2>
+        <h2 text-center>จำนวนคนฝาก : 10 คน</h2>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <!-- <ion-card>
+
+    <ion-card-header>
+      <ion-item>
+        <ion-icon name="arrow-dropdown-circle" item-start color="danger"></ion-icon>
+        รายการถอน
+        <ion-badge item-end>วันที่ 18/2/6</ion-badge>
+
+      </ion-item>
+
+    </ion-card-header>
+    <ion-card-content>
+      <h2 text-center>จำนวนเงิน : 999 บาท</h2>
+      <h2 text-center>จำนวนคนฝาก : 10 คน</h2>
+    </ion-card-content>
+
+  </ion-card> -->
+</ion-content>

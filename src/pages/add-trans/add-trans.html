@@ -1,0 +1,41 @@
+<!--
+  Generated template for the AddTransPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header class="header-addMember" no-border>
+  <ion-navbar>
+    <ion-title>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div>
+              <h1 style="color: white;margin-top: 20px;">เพิ่มรายการ ฝาก-ถอน</h1>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form (ngSubmit)="addTrans()" style="margin-top: 50px;">
+    <ion-item>
+      <ion-label>ประเภทรายการ</ion-label>
+      <ion-select interface="popover" [(ngModel)]="data.status" [ngModelOptions]="{standalone: true}">
+        <ion-option>ฝาก</ion-option>
+        <ion-option>ถอน</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>วันที่</ion-label>
+      <ion-input [(ngModel)]="data.date" type="text" name="title" [ngModelOptions]="{standalone: true}" disabled>
+      </ion-input>
+    </ion-item>
+    <br>
+
+    <button ion-button type="submit" block>เพิ่มรายการ</button>
+  </form>
+</ion-content>

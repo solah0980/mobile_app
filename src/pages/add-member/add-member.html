@@ -1,0 +1,54 @@
+<!--
+  Generated template for the AddMemberPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header class="header-addMember" no-border>
+  <ion-navbar>
+    <ion-title>
+      <ion-grid>
+        <ion-row>
+
+          <ion-col>
+            <div>
+              <h1 style="color: white;margin-top: 20px;">เพิ่มสมาชิกในห้อง</h1>
+            </div>
+
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding style="margin-top: 30px;">
+  <button ion-button color="orange" full (click)="takePhoto()">เรียกใช้กล้อง</button>
+
+  <p text-center *ngIf="this.profile"><img [src]="this.profile" alt="" width="100"
+      style="border-radius: 50%;border: solid 1px red;"></p>
+
+  <form (ngSubmit)="addMember()" style="margin-top: 50px;">
+    <ion-item>
+      <ion-label floating>ชื่อ-สกุล</ion-label>
+      <ion-input [(ngModel)]="user.name" type="text" name="title" [ngModelOptions]="{standalone: true}"></ion-input>
+    </ion-item>
+    <br>
+    <ion-item>
+      <ion-label>เพศ</ion-label>
+      <ion-select interface="popover" [(ngModel)]="user.sex" [ngModelOptions]="{standalone: true}">
+        <ion-option>ชาย</ion-option>
+        <ion-option>หญิง</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>เบอร์โทร</ion-label>
+      <ion-input [(ngModel)]="user.phone" type="number" name="title" [ngModelOptions]="{standalone: true}"></ion-input>
+    </ion-item>
+
+
+    <button ion-button type="submit" block>เพิ่มผู้ใช้</button>
+  </form>
+</ion-content>
