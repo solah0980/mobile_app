@@ -1,3 +1,4 @@
+import { EditMemberPage } from './../edit-member/edit-member';
 import { AddMemberPage } from './../add-member/add-member';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
@@ -18,7 +19,24 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 export class MemberPage {
   users: any[] = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public sqlite: SQLite, public platform: Platform,) {
+    this.platform.ready()
+    .then(() => {
+      this.sqlite.create({
+        name: 'data.db',
+        location: 'default'
+      })
+        .then((db: SQLiteObject) => {
 
+
+          db.executeSql('create table IF NOT EXISTS users(id INTEGER PRIMARY KEY AUTOINCREMENT,name varchar(50),profile varchar(255),phone varchar(10),sex varchar(10))', [])
+          .then(() => {
+              console.log('create table users success')
+            })
+            .catch(e => console.log("error create table"));
+
+        })
+        .catch(e => console.log(e));
+  })
   }
 
   ionViewWillEnter() {
@@ -38,7 +56,7 @@ export class MemberPage {
                 phone: data.rows.item(i).phone,
                 sex: data.rows.item(i).sex
               }
-              /* console.log(data.rows.item(i).id) */
+              console.log(data.rows.item(i).profile)
               this.users.push(d)
             }
           })
@@ -84,4 +102,13 @@ export class MemberPage {
     }, 2000);
   }
 
+  goToEdit(name,phone,profile,sex,id) {
+    this.navCtrl.push(EditMemberPage, {
+      id:id,
+      name: name,
+      phone: phone,
+      profile: profile,
+      sex:sex
+    })
+  }
 }

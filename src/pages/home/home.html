@@ -8,15 +8,41 @@
 </ion-header>
 
 <ion-content padding>
-  <h1 text-center style="margin: 20px;">ยินดีต้อนรับ .....</h1>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <h1 text-center style="margin: 20px;">ยินดีต้อนรับ</h1>
   <hr>
   <div>
     <h2 text-center style="color: #2A5B9D;margin-top: 30px;">จำนวนเงินเหลือทั้งหมด</h2>
-    <p text-center style="color: #2A5B9D;font-size: 50px; margin: 0;">9999 <small>บาท</small> </p>
+    <div *ngIf="data.length!=0">
+
+      <p *ngIf="data.length<2" text-center style="color: #2A5B9D;font-size: 50px; margin: 0;">{{data[0].money |
+        currency:' ':true:'1.2-2'}}
+        <small>บาท</small>
+      </p>
+      <p *ngIf="data.length>1" text-center style="color: #2A5B9D;font-size: 50px; margin: 0;">{{data[1].money -
+        data[0].money |
+        currency:' ':true:'1.2-2'}}
+        <small>บาท</small>
+      </p>
+      <div *ngIf="data.length<1">
+        <h2 text-center>-</h2>
+      </div>
+    </div>
+    <div *ngIf="data.length==0">
+      <h2 text-center>-</h2>
+    </div>
   </div>
   <hr>
   <div>
-    <h2 text-center style="color: #FFAA01;margin-top: 30px;">จำนวนเงินเหลือทั้งหมด</h2>
-    <p text-center style="color: #FFAA01;font-size: 50px; margin: 0;">9999 <small>บาท</small> </p>
+    <h2 text-center style="color: #FFAA01;margin-top: 30px;">จำนวนเงินที่ถอน</h2>
+    <div *ngIf="data.length>1">
+      <p text-center style="color: #FFAA01;font-size: 50px; margin: 0;">{{data[0].money |
+        currency:' ':true:'1.2-2'}} <small *ngIf="data[0].money">บาท</small> </p>
+    </div>
+    <div *ngIf="data.length<2||!data[0].money">
+      <h2 text-center>-</h2>
+    </div>
   </div>
 </ion-content>

@@ -14,37 +14,54 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-fab right bottom>
     <button ion-fab color="secondary" (click)="openList()">
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
+  <div *ngIf="transactions.length!=0">
+    <ion-item>
+      <ion-label>เลือกรายการแสดง</ion-label>
+      <ion-select [(ngModel)]="choose" (ionChange)="onChange()">
+        <ion-option value="all" selected>ทั้งหมด</ion-option>
+        <ion-option value="ฝาก">ฝาก</ion-option>
+        <ion-option value="ถอน">ถอน</ion-option>
+      </ion-select>
+    </ion-item>
 
-  <ion-item>
-    <ion-label>เลือกรายการแสดง</ion-label>
-    <ion-select [(ngModel)]="choose" (ionChange)="onChange()">
-      <ion-option value="all" selected>ทั้งหมด</ion-option>
-      <ion-option value="ฝาก">ฝาก</ion-option>
-      <ion-option value="ถอน">ถอน</ion-option>
-    </ion-select>
-  </ion-item>
+    <div *ngFor="let tran of transactions">
+      <ion-card (click)="showTrans(tran.id,tran.status)">
+        <ion-card-header>
+          <ion-item>
+            <ion-icon name="arrow-dropup-circle" item-start color="secondary" *ngIf="tran.status == 'ฝาก'"></ion-icon>
+            <ion-icon name="arrow-dropdown-circle" item-start color="danger" *ngIf="tran.status == 'ถอน'"></ion-icon>
+            {{tran.status}}
+            <ion-badge item-end>{{tran.date}}</ion-badge>
+          </ion-item>
 
-  <div *ngFor="let tran of transactions">
-    <ion-card (click)="showTrans(tran.id,tran.status)">
-      <ion-card-header>
-        <ion-item>
-          <ion-icon name="arrow-dropup-circle" item-start color="secondary" *ngIf="tran.status == 'ฝาก'"></ion-icon>
-          <ion-icon name="arrow-dropdown-circle" item-start color="danger" *ngIf="tran.status == 'ถอน'"></ion-icon>
-          {{tran.status}}
-          <ion-badge item-end>{{tran.date}}</ion-badge>
-        </ion-item>
+        </ion-card-header>
+        <ion-card-content>
+          <h2 text-center>จำนวนเงิน : {{tran.money |
+            currency:' ':true:'1.2-2'}} บาท</h2>
+          <div *ngIf="tran.status == 'ฝาก'">
+            <h2 text-center>จำนวนคนฝาก : {{tran.count}} คน</h2>
+          </div>
+          <div *ngIf="tran.status == 'ถอน'">
+            <h2 text-center>จำนวนรายการซื้อ : {{tran.count}} รายการ</h2>
+          </div>
+        </ion-card-content>
 
-      </ion-card-header>
-      <ion-card-content>
-        <h2 text-center>จำนวนเงิน : 999 บาท</h2>
-        <h2 text-center>จำนวนคนฝาก : 10 คน</h2>
-      </ion-card-content>
-    </ion-card>
+      </ion-card>
+    </div>
+  </div>
+  <div *ngIf="transactions.length==0">
+    <ion-item>
+      <h1 text-center>--------ไม่มีข้อมูล---------</h1>
+    </ion-item>
   </div>
   <!-- <ion-card>
 

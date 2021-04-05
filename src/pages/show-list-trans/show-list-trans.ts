@@ -2,6 +2,7 @@ import { AddListTransPage } from './../add-list-trans/add-list-trans';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { ToastController } from 'ionic-angular';
 
 /**
  * Generated class for the ShowListTransPage page.
@@ -19,25 +20,9 @@ export class ShowListTransPage {
   id: any;
   status: any;
   data: any[] = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public sqlite: SQLite,public platform: Platform) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public sqlite: SQLite,public platform: Platform, public toastCtrl: ToastController) {
     this.id = this.navParams.get('id')
     this.status = this.navParams.get('status')
-    this.platform.ready()
-      .then(() => {
-        this.sqlite.create({
-          name: 'data.db',
-          location: 'default'
-        })
-          .then(function(db: SQLiteObject) {
-            db.executeSql("create table IF NOT EXISTS list_trans(id INTEGER PRIMARY KEY AUTOINCREMENT,id_trans INTEGER,id_member INTEGER,money INTEGER,list_name varchar(50))", [])
-              .then(function(data) {
-                console.log("create table success")
-              })
-              .catch(e => console.log(JSON.stringify(e)));
-
-          })
-          .catch(e => console.log(JSON.stringify(e)));
-    })
 
   }
   ionViewDidEnter() {
@@ -48,6 +33,7 @@ export class ShowListTransPage {
     } else {
       query = 'SELECT * FROM list_trans WHERE id_trans = ? ';
     }
+    console.log(query)
     this.data=[]
     this.sqlite.create({
       name: 'data.db',
@@ -83,5 +69,27 @@ export class ShowListTransPage {
       id: this.id,
       status: this.status
     })
-}
+  }
+
+  deleteItem(id) {
+    console.log(id)
+    this.sqlite.create({
+      name: 'data.db',
+      location: 'default'
+    })
+      .then((db: SQLiteObject) => {
+        db.executeSql('DELETE FROM list_trans WHERE id = ? ', [id])
+          .then(() => {
+            const toast = this.toastCtrl.create({
+              message: 'ลบข้อมูลสำเร็จ',
+              duration: 3000
+            });
+            toast.present();
+          }).then(() => {
+            this.ionViewDidEnter()
+          })
+              .catch(e => console.log(JSON.stringify(e)));
+      })
+    .catch (e => console.log(e));
+  }
 }

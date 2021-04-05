@@ -18,18 +18,18 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 export class AddMemberPage {
   user: any = {};
   profile: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public sqlite: SQLite, public platform: Platform
-  ,public toastCtrl: ToastController,private camera: Camera) {
+   constructor(public navCtrl: NavController, public navParams: NavParams, public sqlite: SQLite, public platform: Platform
+  ,public toastCtrl: ToastController,private camera: Camera,) {
   }
 
   takePhoto() {
     const options: CameraOptions = {
-      destinationType: this.camera.DestinationType.FILE_URI,
+      destinationType: this.camera.DestinationType.DATA_URL,
       sourceType: this.camera.PictureSourceType.CAMERA,
       encodingType: this.camera.EncodingType.JPEG,
       targetHeight: 600,
       targetWidth: 600,
-      saveToPhotoAlbum: true,
+      saveToPhotoAlbum: false,
       correctOrientation:true
 
 
@@ -37,8 +37,8 @@ export class AddMemberPage {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-      this.profile = 'data:image/jpeg;base64,' + imageData;
-      console.log(this.profile)
+      this.profile = 'data:image/jpeg;base64,'+imageData
+     /*  console.log(this.profile) */
      }, (err) => {
       // Handle error
      });
@@ -51,7 +51,7 @@ export class AddMemberPage {
       location: 'default'
     })
       .then((db: SQLiteObject) => {
-        db.executeSql('INSERT INTO users(name,profile,phone,sex) VALUES(?,?,?,?) ', [this.user.name,'',this.user.phone,this.user.sex])
+        db.executeSql('INSERT INTO users(name,profile,phone,sex) VALUES(?,?,?,?) ', [this.user.name,this.profile,this.user.phone,this.user.sex])
           .then(() => {
             const toast = this.toastCtrl.create({
               message: 'เพิ่มข้อมูลสมาชิกในห้องสำเร็จ',

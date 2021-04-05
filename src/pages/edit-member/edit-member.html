@@ -1,5 +1,5 @@
 <!--
-  Generated template for the AddMemberPage page.
+  Generated template for the EditMemberPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -12,7 +12,7 @@
 
           <ion-col>
             <div>
-              <h1 style="color: white;margin-top: 20px;">เพิ่มสมาชิกในห้อง</h1>
+              <h1 style="color: white;margin-top: 20px;">แก้ไขข้อมูลสมาชิก</h1>
             </div>
 
           </ion-col>
@@ -31,7 +31,7 @@
   </p>
 
 
-  <form (ngSubmit)="addMember()" style="margin-top: 30px;">
+  <form (ngSubmit)="editMember()" style="margin-top: 30px; margin-bottom: 20px;">
     <ion-item>
       <ion-label floating>ชื่อ-สกุล</ion-label>
       <ion-input [(ngModel)]="user.name" type="text" name="title" [ngModelOptions]="{standalone: true}"></ion-input>
@@ -47,10 +47,13 @@
 
     <ion-item>
       <ion-label floating>เบอร์โทร</ion-label>
-      <ion-input [(ngModel)]="user.phone" type="number" name="title" [ngModelOptions]="{standalone: true}"></ion-input>
+      <ion-input [(ngModel)]="user.phone" type="number" name="title" [ngModelOptions]="{standalone: true}">
+      </ion-input>
     </ion-item>
 
 
-    <button ion-button type="submit" block>เพิ่มผู้ใช้</button>
+    <button ion-button type="submit" block>บันทึกการแก้ไข</button>
+    <button ion-button type="button" block color="danger" (click)="deleteMember()">ลบสมาชิก</button>
   </form>
+
 </ion-content>

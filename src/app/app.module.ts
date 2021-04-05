@@ -1,3 +1,4 @@
+import { EditMemberPageModule } from './../pages/edit-member/edit-member.module';
 import { ShowListTransPageModule } from './../pages/show-list-trans/show-list-trans.module';
 import { AddTransPageModule } from './../pages/add-trans/add-trans.module';
 import { AddListTransPageModule } from './../pages/add-list-trans/add-list-trans.module';
@@ -31,7 +32,8 @@ import { Camera } from '@ionic-native/camera';
     TransactionPageModule,
     AddListTransPageModule,
     AddTransPageModule,
-    ShowListTransPageModule
+    ShowListTransPageModule,
+    EditMemberPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

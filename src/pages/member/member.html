@@ -24,38 +24,34 @@
     </button>
   </ion-fab>
 
-  <ion-item>
-    <h1 text-center>จำนวนสมาชิกทั้งหมด {{users.length}} คน</h1>
-  </ion-item>
+  <div *ngIf="users.length==0">
+    <ion-item>
+      <h1 text-center>--------ไม่มีข้อมูลสมาชิก---------</h1>
+    </ion-item>
+  </div>
 
-  <ion-list style="margin: 0;height: 170px;" *ngFor="let member of users">
-    <ion-item-sliding>
-      <ion-item class="item-md-member">
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <img src="../../assets/imgs/3.png" alt="" width="100" style="border-radius: 50%;border: solid 1px red;">
-            </ion-col>
-            <ion-col>
-              <div style="margin-top: 15px;color: white;">
-                <h1>ชื่อ: {{member.name}}</h1>
-                <h1>เพศ: {{member.sex}}</h1>
-                <h1>เบอร์โทร: {{member.phone}}</h1>
+  <div *ngFor="let member of users">
 
-              </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+
+    <ion-card>
+      <img *ngIf="member.profile" [src]="member.profile" width="200" height="200">
+      <img *ngIf="!member.profile" src="../../assets/imgs/profile.png">
+      <ion-item>
+        <ion-icon name="person" item-start large></ion-icon>
+        <h2>{{member.name}}</h2>
       </ion-item>
-      <ion-item-options side="right">
-        <button ion-button style="height: 150px;margin-top: 20px;">
-          <ion-icon name="trash"></ion-icon>Delete
-        </button>
-        <button ion-button style=" border-radius: 0 20px 20px 0;height: 150px;margin-top: 20px;background-color: red;">
-          <ion-icon name="trash"></ion-icon>Delete
-        </button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
 
+      <ion-item>
+        <ion-icon name="call" item-start large></ion-icon>
+        <h2>{{member.phone}}</h2>
+      </ion-item>
+
+      <ion-item>
+        <button ion-button full color="orange"
+          (click)="goToEdit(member.name,member.phone,member.profile,member.sex,member.id)">
+          จัดการข้อมูล
+        </button>
+      </ion-item>
+    </ion-card>
+  </div>
 </ion-content>

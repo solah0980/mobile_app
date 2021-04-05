@@ -11,7 +11,7 @@
         <ion-row>
           <ion-col>
             <div>
-              <h2 style="color: white;margin-top: 20px;">เพิ่มรายละเอียด {{status}}</h2>
+              <h2 style="color: white;margin-top: 20px;">รายละเอียดการ {{status}}</h2>
             </div>
           </ion-col>
         </ion-row>
@@ -44,7 +44,8 @@
                 <div style="margin-top: 5px;color: white;">
                   <h1 text-center *ngIf="d.name">ชื่อ: {{d.name}}</h1>
                   <h1 text-center *ngIf="d.list_name">รายการ: {{d.list_name}}</h1>
-                  <h1 text-center>จำนวนเงิน: {{d.money}}</h1>
+                  <h1 text-center>จำนวนเงิน: {{d.money |
+                    currency:' ':true:'1.2-2'}} บาท</h1>
 
                 </div>
               </ion-col>
@@ -52,11 +53,8 @@
           </ion-grid>
         </ion-item>
         <ion-item-options side="right">
-          <button ion-button style="height: 108px;margin-top: 20px;">
-            <ion-icon name="trash"></ion-icon>Delete
-          </button>
-          <button ion-button
-            style=" border-radius: 0 20px 20px 0;height: 108px;margin-top: 20px;background-color: red;">
+          <button ion-button style=" border-radius: 0 20px 20px 0;height: 108px;margin-top: 20px;background-color: red;"
+            (click)="deleteItem(d.id)">
             <ion-icon name="trash"></ion-icon>Delete
           </button>
         </ion-item-options>
